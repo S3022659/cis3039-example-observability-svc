@@ -6,6 +6,7 @@ import { FakeProductRepo } from '../infra/fake-product-repo';
 import { DummyProductUpdatedNotifier } from '../infra/dummy-product-updated-notifier';
 import { HttpProductUpdatedNotifier } from '../infra/http-product-updated-notifier';
 import { ProductUpdatedNotifier } from '../app/product-updated-notifier';
+import { Logger } from '../app/logger';
 
 let cachedProductUpdatedNotifier: ProductUpdatedNotifier | null = null;
 
@@ -54,8 +55,9 @@ export const makeListProductsDeps = (): ListProductsDeps => ({
   productRepo: getProductRepo(),
 });
 
-export const makeUpsertProductDeps = (): UpsertProductDeps => ({
+export const makeUpsertProductDeps = (logger: Logger): UpsertProductDeps => ({
   productRepo: getProductRepo(),
   now: () => new Date(),
   productUpdatedNotifier: getProductUpdatedNotifier(),
+  logger,
 });

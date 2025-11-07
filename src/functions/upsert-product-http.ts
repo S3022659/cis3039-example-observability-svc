@@ -1,9 +1,15 @@
-import { app, HttpRequest, HttpResponseInit } from '@azure/functions';
+import {
+  app,
+  HttpRequest,
+  HttpResponseInit,
+  InvocationContext,
+} from '@azure/functions';
 import { upsertProduct } from '../app/upsert-product';
 import { makeUpsertProductDeps } from '../config/appServices';
 
 const upsertProductHandler = async (
-  request: HttpRequest
+  request: HttpRequest,
+  context: InvocationContext
 ): Promise<HttpResponseInit> => {
   try {
     const body = (await request.json()) as any;
@@ -31,7 +37,7 @@ const upsertProductHandler = async (
       };
     }
 
-    const deps = makeUpsertProductDeps();
+    const deps = makeUpsertProductDeps(context);
     const result = await upsertProduct(deps, {
       id,
       name,
