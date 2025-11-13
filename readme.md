@@ -143,7 +143,7 @@ https://ica-function-jc76.azurewebsites.net/api/products
 
    ```bash
    az monitor log-analytics workspace create \
-     --name <your-workspace-name> \
+     --name ica-workspace-jc76 \
      --resource-group ica-rg \
      --location uksouth
    ```
@@ -154,7 +154,7 @@ https://ica-function-jc76.azurewebsites.net/api/products
    az monitor app-insights component update \
      --app ica-function-jc76 \
      --resource-group ica-rg \
-     --workspace <your-workspace-name>
+     --workspace ica-workspace-jc76
    ```
 
    > Your version of the CLI may ask permission to upgrade the extension: say Y
@@ -169,7 +169,7 @@ https://ica-function-jc76.azurewebsites.net/api/products
      --resource ica-function-jc76 \
      --resource-type Microsoft.Web/sites \
      --resource-group ica-rg \
-     --workspace <your-workspace-name> \
+     --workspace ica-workspace-jc76 \
      --logs '[{"category":"FunctionAppLogs","enabled":true}]' \
      --metrics '[{"category":"AllMetrics","enabled":true}]'
    ```
@@ -184,7 +184,7 @@ https://ica-function-jc76.azurewebsites.net/api/products
    --resource <your-cosmos-account> \
    --resource-type Microsoft.DocumentDB/databaseAccounts \
    --resource-group ica-rg \
-   --workspace <your-workspace-name> \
+   --workspace ica-workspace-jc76 \
    --export-to-resource-specific true \
    --logs '[
    {"category":"DataPlaneRequests","enabled":true},
