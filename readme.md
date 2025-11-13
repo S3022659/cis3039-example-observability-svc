@@ -229,7 +229,7 @@ Update `local.settings.json` (created from the template) to include the base URL
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "PRODUCT_UPDATED_BASE_URL": "https://your-receiver.azurewebsites.net"
+    "PRODUCT_UPDATED_BASE_URL": "https://ica-function-jc76.azurewebsites.net/"
   }
 }
 ```
@@ -246,7 +246,7 @@ You can set this via Azure CLI:
 az functionapp config appsettings set \
   --name ica-function-jc76 \
   --resource-group ica-rg \
-  --settings PRODUCT_UPDATED_BASE_URL=https://<your-receiver>.azurewebsites.net
+  --settings PRODUCT_UPDATED_BASE_URL=https://ica-function-jc76.azurewebsites.net
 ```
 
 If needed, restart the Function App to pick up changes immediately:
