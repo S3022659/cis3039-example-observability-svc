@@ -95,8 +95,8 @@ az policy assignment list \
 
 ```bash
 az group create \
-  --name <your-resource-group> \
-  --location <permitted-location>
+  --name ica-rg \
+  --location uksouth
 ```
 
 Remember to follow our naming convention, e.g. shopping-lab-ab47-rg
@@ -105,9 +105,9 @@ Remember to follow our naming convention, e.g. shopping-lab-ab47-rg
 
 ```bash
 az storage account create \
-  --name <yourfuncstorageaccount> \
-  --location <permitted-location> \
-  --resource-group <your-resource-group> \
+  --name icastoragejc76 \
+  --location uksouth \
+  --resource-group ica-rg \
   --sku Standard_LRS
 ```
 
@@ -115,10 +115,10 @@ az storage account create \
 
 ```bash
 az functionapp create \
-  --name <your-function-app> \
-  --resource-group <your-resource-group> \
-  --storage-account <yourfuncstorageaccount> \
-  --consumption-plan-location <permitted-location> \
+  --name ica-function-jc76 \
+  --resource-group ica-rg \
+  --storage-account icastoragejc76 \
+  --consumption-plan-location uksouth \
   --runtime node \
   --functions-version 4
 ```
@@ -128,13 +128,13 @@ az functionapp create \
 Deploy your code to the Function App:
 
 ```bash
-func azure functionapp publish <your-function-app>
+func azure functionapp publish ica-function-jc76
 ```
 
 You can now access your endpoints at:
 
 ```
-https://<your-function-app>.azurewebsites.net/api/products
+https://ica-function-jc76.azurewebsites.net/api/products
 ```
 
 ### Configure the Monitoring
@@ -144,16 +144,16 @@ https://<your-function-app>.azurewebsites.net/api/products
    ```bash
    az monitor log-analytics workspace create \
      --name <your-workspace-name> \
-     --resource-group <your-resource-group> \
-     --location <permitted-location>
+     --resource-group ica-rg \
+     --location uksouth
    ```
 
 2. Connect the Application Insights to the Log Analytics Workspace
 
    ```bash
    az monitor app-insights component update \
-     --app <your-function-app> \
-     --resource-group <your-resource-group> \
+     --app ica-function-jc76 \
+     --resource-group ica-rg \
      --workspace <your-workspace-name>
    ```
 
@@ -166,9 +166,9 @@ https://<your-function-app>.azurewebsites.net/api/products
    ```bash
    az monitor diagnostic-settings create \
      --name send-to-law \
-     --resource <your-function-app> \
+     --resource ica-function-jc76 \
      --resource-type Microsoft.Web/sites \
-     --resource-group <your-resource-group> \
+     --resource-group ica-rg \
      --workspace <your-workspace-name> \
      --logs '[{"category":"FunctionAppLogs","enabled":true}]' \
      --metrics '[{"category":"AllMetrics","enabled":true}]'
@@ -183,7 +183,7 @@ https://<your-function-app>.azurewebsites.net/api/products
    --name send-to-law \
    --resource <your-cosmos-account> \
    --resource-type Microsoft.DocumentDB/databaseAccounts \
-   --resource-group <your-resource-group> \
+   --resource-group ica-rg \
    --workspace <your-workspace-name> \
    --export-to-resource-specific true \
    --logs '[
@@ -244,8 +244,8 @@ You can set this via Azure CLI:
 
 ```bash
 az functionapp config appsettings set \
-  --name <your-function-app> \
-  --resource-group <your-resource-group> \
+  --name ica-function-jc76 \
+  --resource-group ica-rg \
   --settings PRODUCT_UPDATED_BASE_URL=https://<your-receiver>.azurewebsites.net
 ```
 
@@ -253,15 +253,15 @@ If needed, restart the Function App to pick up changes immediately:
 
 ```bash
 az functionapp restart \
-  --name <your-function-app> \
-  --resource-group <your-resource-group>
+  --name ica-function-jc76 \
+  --resource-group ica-rg
 ```
 
 If needed, allow cross-domain calls from your app domain and/or localhost, for example:
 
 ```bash
 az functionapp cors add \
-  --name <your-function-app> \
-  --resource-group <your-resource-group> \
+  --name ica-function-jc76 \
+  --resource-group ica-rg \
   --allowed-origins http://localhost:5173
 ```
